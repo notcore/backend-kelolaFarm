@@ -6,7 +6,7 @@ use App\Http\Controllers\TanahController;
 use App\Http\Middleware\AdminMiddleware;
 
 
-Route::middleware("auth:sanctum")
+Route::prefix('tanah')->middleware("auth:sanctum")
     ->controller(TanahController::class)
     ->group(function () {
         Route::get('/', 'index');          
@@ -14,7 +14,7 @@ Route::middleware("auth:sanctum")
     });
 
     
-Route::middleware(["auth:sanctum", AdminMiddleware::class])
+Route::prefix('tanah')->middleware("auth:sanctum")
     ->controller(TanahController::class)
     ->group(function () {
         Route::post('/', 'store');     

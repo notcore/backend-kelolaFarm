@@ -12,7 +12,7 @@ Route::middleware('auth:sanctum')
         Route::post('/', 'store');        
     });
 
-Route::middleware('auth:sanctum')
+Route::prefix('lahan')->middleware("auth:sanctum")
     ->controller(LahanController::class)
     ->group(function () {
         Route::put('/{lahan}', 'update'); 
