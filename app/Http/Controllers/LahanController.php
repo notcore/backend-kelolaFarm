@@ -26,20 +26,20 @@ class LahanController extends Controller
     {
         $data = $request->validate([
             'user_id' => 'required|exists:users,id',
-        'tanah_id' => 'required|exists:tanahs,id',
-        'daerah_id' => 'required|exists:daerahs,id',
-        'nama_lahan' => 'required|string',
-        'hektar' => 'required|numeric',
-        'gambar_lahan' => 'image',
-        'lat' => 'nullable|numeric',
-        'lon' => 'nullable|numeric',
+            'tanah_id' => 'required|exists:tanahs,id',
+            'daerah_id' => 'required|exists:daerahs,id',
+            'nama_lahan' => 'required|string',
+            'hektar' => 'required|numeric',
+            'gambar_lahan' => 'image',
+            'lat' => 'nullable|numeric',
+            'lon' => 'nullable|numeric',
         ]);
 
         if ($request->hasFile('gambar_lahan')) {
             $data['gambar_lahan'] = $request->file('gambar_lahan')
                 ->store('lahan', 'public');
         }
-       
+
 
         $lahan = Lahan::create($data);
 
@@ -65,54 +65,49 @@ class LahanController extends Controller
      */
     public function update(Request $request, Lahan $lahan)
     {
+        $user = $request->user();
+
+        if ($user->id !== $lahan->user_id && $user->role !== 'admin') {
+            return response()->json(['message' => 'Forbidden'], 403);
+        }
+
         $data = $request->validate([
-        'user_id' => 'required|exists:users,id',
-        'tanah_id' => 'required|exists:tanahs,id',
-        'daerah_id' => 'required|exists:daerahs,id',
-        'nama_lahan' => 'required|string',
-        'hektar' => 'required|numeric',
-        'gambar_lahan' => 'image',
-        'lat' => 'nullable|numeric',
-        'lon' => 'nullable|numeric',
+            'nama_lahan' => 'required|string',
+            'hektar' => 'required|numeric',
+            'gambar_lahan' => 'image|nullable',
+            'tanah_id' => 'required|exists:tanahs,id',
+            'daerah_id' => 'required|exists:daerahs,id',
         ]);
 
         if ($request->hasFile('gambar_lahan')) {
-         
-            if (
-                $lahan->gambar_lahan &&
-                $lahan->gambar_lahan !== 'lahan/default.jpg'
-            ) {
+            if ($lahan->gambar_lahan) {
                 Storage::disk('public')->delete($lahan->gambar_lahan);
             }
-
-            $data['gambar_lahan'] = $request->file('gambar_lahan')
-                ->store('lahan', 'public');
+            $data['gambar_lahan'] = $request->file('gambar_lahan')->store('lahan', 'public');
         }
 
         $lahan->update($data);
 
         return response()->json([
             'message' => 'success',
-            'data' => $lahan
+            'data' => $lahan,
         ], 200);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Lahan $lahan)
+    public function destroy(Request $request, Lahan $lahan)
     {
-        if (
-            $lahan->gambar_lahan &&
-            $lahan->gambar_lahan !== 'lahan/default.jpg'
-        ) {
+        $user = $request->user();
+
+        if ($user->id !== $lahan->user_id && $user->role !== 'admin') {
+            return response()->json(['message' => 'Forbidden'], 403);
+        }
+
+        if ($lahan->gambar_lahan) {
             Storage::disk('public')->delete($lahan->gambar_lahan);
         }
 
         $lahan->delete();
 
-        return response()->json([
-            'message' => 'success delete'
-        ], 200);
+        return response()->json(['message' => 'success delete'], 200);
     }
 }

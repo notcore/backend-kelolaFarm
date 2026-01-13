@@ -1,0 +1,23 @@
+<?php
+
+use App\Models\tanaman;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TanamanController;
+use App\Http\Middleware\AdminMiddleware;
+
+
+Route::middleware("auth:sanctum")
+    ->controller(TanamanController::class)
+    ->group(function () {
+        Route::get('/', 'index');          
+        Route::get('/{tanaman}', 'show');   
+    });
+
+    
+Route::middleware(["auth:sanctum", AdminMiddleware::class])
+    ->controller(TanamanController::class)
+    ->group(function () {
+        Route::post('/', 'store');     
+        Route::put('/{tanaman}', 'update'); 
+        Route::delete('/{tanaman}', 'destroy'); 
+    });
