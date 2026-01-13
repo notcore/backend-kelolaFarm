@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string("nama_lahan");
             $table->decimal("hektar", 8,2);
             $table->string("gambar_lahan")->default('lahan/default.jpg');
+            $table->decimal('lat', 10, 7)->nullable();
+            $table->decimal('lon', 10, 7)->nullable();
             $table->timestamps();
         });
     }

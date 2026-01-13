@@ -25,20 +25,21 @@ class LahanController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'user_id'    => 'required|exists:users,id',
-            'tanah_id'   => 'required|exists:tanahs,id',
-            'daerah_id'  => 'required|exists:daerahs,id',
-            'nama_lahan' => 'required|string|max:255',
-            'hektar'     => 'required|numeric',
-            'gambar_lahan' => 'nullable|image|max:2048',
+            'user_id' => 'required|exists:users,id',
+        'tanah_id' => 'required|exists:tanahs,id',
+        'daerah_id' => 'required|exists:daerahs,id',
+        'nama_lahan' => 'required|string',
+        'hektar' => 'required|numeric',
+        'gambar_lahan' => 'image',
+        'lat' => 'nullable|numeric',
+        'lon' => 'nullable|numeric',
         ]);
 
-        // upload gambar kalau ada
         if ($request->hasFile('gambar_lahan')) {
             $data['gambar_lahan'] = $request->file('gambar_lahan')
                 ->store('lahan', 'public');
         }
-        // kalau gak ada → otomatis pakai default dari migration
+       
 
         $lahan = Lahan::create($data);
 
@@ -65,15 +66,18 @@ class LahanController extends Controller
     public function update(Request $request, Lahan $lahan)
     {
         $data = $request->validate([
-            'tanah_id'   => 'required|exists:tanahs,id',
-            'daerah_id'  => 'required|exists:daerahs,id',
-            'nama_lahan' => 'required|string|max:255',
-            'hektar'     => 'required|numeric',
-            'gambar_lahan' => 'nullable|image|max:2048',
+        'user_id' => 'required|exists:users,id',
+        'tanah_id' => 'required|exists:tanahs,id',
+        'daerah_id' => 'required|exists:daerahs,id',
+        'nama_lahan' => 'required|string',
+        'hektar' => 'required|numeric',
+        'gambar_lahan' => 'image',
+        'lat' => 'nullable|numeric',
+        'lon' => 'nullable|numeric',
         ]);
 
         if ($request->hasFile('gambar_lahan')) {
-            // hapus gambar lama kecuali default
+         
             if (
                 $lahan->gambar_lahan &&
                 $lahan->gambar_lahan !== 'lahan/default.jpg'

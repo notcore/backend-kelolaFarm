@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use App\Models\Harga;
 use App\Models\Tanah;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -19,5 +21,11 @@ class Daerah extends Model
    public function Tanah(): BelongsTo
    {
    return $this->belongsTo(Tanah::class);
+   }
+
+   //import hasMany and model
+   public function harga(): HasMany
+   {
+   return $this->hasMany(Harga::class);
    }
 }

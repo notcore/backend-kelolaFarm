@@ -3,11 +3,13 @@
 namespace App\Models;
 
 
+use App\Models\Harga;
 use App\Models\Lahan;
 use App\Models\Tanah;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Tanaman extends Model
@@ -29,5 +31,11 @@ class Tanaman extends Model
         return $this->belongsToMany(Lahan::class)
             ->withPivot('jumlah')
             ->withTimestamps();
+    }
+
+    //import hasMany and model
+    public function harga(): HasMany
+    {
+    return $this->hasMany(Harga::class);
     }
 }

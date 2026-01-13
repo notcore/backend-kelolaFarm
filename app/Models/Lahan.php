@@ -16,10 +16,14 @@ class Lahan extends Model
     use HasFactory;
     
     protected $fillable = [
+        'user_id',
         'tanah_id',
         'daerah_id',
         'nama_lahan',
         'hektar',
+        'gambar_lahan',
+        'lat',
+        'lon'
     ];
 
     public function tanah(): BelongsTo
