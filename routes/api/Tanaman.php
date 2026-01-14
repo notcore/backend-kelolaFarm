@@ -14,7 +14,7 @@ Route::prefix('daerah')->middleware("auth:sanctum")
     });
 
     
-Route::middleware(["auth:sanctum", AdminMiddleware::class])
+Route::prefix("daerah")->middleware(["auth:sanctum", AdminMiddleware::class])
     ->controller(TanamanController::class)
     ->group(function () {
         Route::post('/', 'store');     

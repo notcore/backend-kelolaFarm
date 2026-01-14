@@ -13,7 +13,7 @@ Route::prefix('daerah')->middleware("auth:sanctum")
         Route::get('/{daerah}', 'show');
     });
 
-Route::middleware(["auth:sanctum", AdminMiddleware::class])
+Route::prefix('daerah')->middleware(["auth:sanctum", AdminMiddleware::class])
     ->controller(DaerahController::class)
     ->group(function () {
         Route::post('/', 'store');

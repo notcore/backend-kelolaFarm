@@ -14,7 +14,7 @@ Route::prefix('tanah')->middleware("auth:sanctum")
     });
 
     
-Route::prefix('tanah')->middleware("auth:sanctum")
+Route::prefix('tanah')->middleware("auth:sanctum", AdminMiddleware::class)
     ->controller(TanahController::class)
     ->group(function () {
         Route::post('/', 'store');     

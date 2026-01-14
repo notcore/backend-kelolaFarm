@@ -6,7 +6,7 @@ use App\Http\Controllers\HargaController;
 use App\Http\Middleware\AdminMiddleware;
 
 
-Route::middleware("auth:sanctum")
+Route::prefix("harga")->middleware("auth:sanctum")
     ->controller(HargaController::class)
     ->group(function () {
         Route::get('/', 'index');          
@@ -14,7 +14,7 @@ Route::middleware("auth:sanctum")
     });
 
 
-Route::middleware(["auth:sanctum", AdminMiddleware::class])
+Route::prefix("harga")->middleware(["auth:sanctum", AdminMiddleware::class])
     ->controller(HargaController::class)
     ->group(function () {
         Route::post('/', 'store');     

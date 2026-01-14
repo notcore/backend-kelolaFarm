@@ -4,7 +4,7 @@ use App\Http\Controllers\LahanController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\AdminMiddleware;
 
-Route::middleware('auth:sanctum')
+Route::prefix("lahan")->middleware('auth:sanctum')
     ->controller(LahanController::class)
     ->group(function () {
         Route::get('/', 'index');    
