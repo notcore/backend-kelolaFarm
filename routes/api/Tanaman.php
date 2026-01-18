@@ -6,7 +6,7 @@ use App\Http\Controllers\TanamanController;
 use App\Http\Middleware\AdminMiddleware;
 
 
-Route::prefix('daerah')->middleware("auth:sanctum")
+Route::prefix('tanaman')->middleware("auth:sanctum")
     ->controller(TanamanController::class)
     ->group(function () {
         Route::get('/', 'index');          

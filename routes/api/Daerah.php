@@ -6,7 +6,7 @@ use App\Http\Controllers\DaerahController;
 use App\Http\Middleware\AdminMiddleware;
 
 
-Route::prefix('daerah')->middleware("auth:sanctum")
+Route::prefix('daerah')
     ->controller(DaerahController::class)
     ->group(function () {
         Route::get('/', 'index');

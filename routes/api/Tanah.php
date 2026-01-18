@@ -6,7 +6,7 @@ use App\Http\Controllers\TanahController;
 use App\Http\Middleware\AdminMiddleware;
 
 
-Route::prefix('tanah')->middleware("auth:sanctum")
+Route::prefix('tanah')
     ->controller(TanahController::class)
     ->group(function () {
         Route::get('/', 'index');          

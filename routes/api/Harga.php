@@ -6,7 +6,7 @@ use App\Http\Controllers\HargaController;
 use App\Http\Middleware\AdminMiddleware;
 
 
-Route::prefix("harga")->middleware("auth:sanctum")
+Route::prefix("harga")
     ->controller(HargaController::class)
     ->group(function () {
         Route::get('/', 'index');          

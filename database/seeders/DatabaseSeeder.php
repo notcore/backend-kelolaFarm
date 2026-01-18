@@ -13,9 +13,21 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         Tanah::factory(5)->create();
-        Daerah::factory(10)->create();
+
+        $listDaerah = ["Sleman", "Bantul", "Gunungkidul", "Kulon Progo", "Kota Yogyakarta"];
+
+        $tanahId = Tanah::factory()->create()->id;
+
+        foreach ($listDaerah as $nama) {
+            Daerah::create([
+                'nama_daerah' => $nama,
+                'tanah_id'    => $tanahId,
+            ]);
+        }
+
         Tanaman::factory(15)->create();
         Harga::factory(10)->create();
+
         $this->call([
             AdminUserSeeder::class,
         ]);

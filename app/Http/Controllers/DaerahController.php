@@ -10,8 +10,8 @@ class DaerahController extends Controller
     public function index()
     {
         return response()->json([
-            "message" => "success",
-            "data" => Daerah::with('tanah')->get()
+            "message" => "success mengirim data daerah",
+            "data" => Daerah::with("tanah")->get()
         ], 200);
     }
 

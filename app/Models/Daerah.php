@@ -17,13 +17,12 @@ class Daerah extends Model
         "nama_daerah",
         "tanah_id"
     ];
-   //import belongsto and model
+    
    public function Tanah(): BelongsTo
    {
    return $this->belongsTo(Tanah::class);
    }
 
-   //import hasMany and model
    public function harga(): HasMany
    {
    return $this->hasMany(Harga::class);
