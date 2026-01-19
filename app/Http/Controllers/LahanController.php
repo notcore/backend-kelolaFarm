@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Lahan;
+use Illuminate\Container\Attributes\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -13,9 +14,11 @@ class LahanController extends Controller
      */
     public function index()
     {
+        $lahan = Lahan::where('user_id', auth()->user()->id)->with('tanah', 'daerah', 'tanaman')->get();
+
         return response()->json([
             'message' => 'success',
-            'data' => Lahan::with(['tanah', 'daerah', 'tanaman'])->get()
+            'data' => $lahan
         ], 200);
     }
 
